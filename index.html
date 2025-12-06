@@ -41,12 +41,8 @@
     }
 
     @keyframes snow-fall {
-      0% {
-        transform: translateY(-40px);
-      }
-      100% {
-        transform: translateY(40px);
-      }
+      0% { transform: translateY(-40px); }
+      100% { transform: translateY(40px); }
     }
 
     .card {
@@ -138,7 +134,7 @@
       background: radial-gradient(circle at top left, #0f766e, #020617 60%);
       cursor: pointer;
       transition: transform 0.12s ease, box-shadow 0.12s ease,
-        background 0.25s ease, border-color 0.15s ease, translate 0.12s ease;
+        background 0.25s ease, border-color 0.15s ease;
       border: 1px solid rgba(148, 163, 184, 0.4);
       overflow: hidden;
       display: flex;
@@ -326,6 +322,21 @@
       background: #fbbf24;
     }
 
+    .modal-image-wrapper {
+      margin: 8px 0 6px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: #020617;
+    }
+
+    .modal-image-wrapper img {
+      width: 100%;
+      display: block;
+      max-height: 230px;
+      object-fit: cover;
+    }
+
     .modal-footnote {
       margin-top: 10px;
       font-size: 0.7rem;
@@ -396,6 +407,9 @@
             <span class="modal-tag-dot"></span>
             <span id="tag-text"></span>
           </div>
+          <div class="modal-image-wrapper" id="modal-image-wrapper" style="display:none;">
+            <img id="modal-image" alt="Christmas gif" />
+          </div>
           <div id="content"></div>
           <div class="modal-footnote">
             6–25 December • <span>Advent Vibes</span>
@@ -407,26 +421,26 @@
 
   <script>
     const data = {
-      6: { tag: "Aesthetic", emoji: "🕯️", val: "Dark green velvet, soft fairy lights, and calm vibes. Imagine a quiet evening with a warm drink and zero rush. ☕✨" },
-      7: { tag: "Quote", emoji: "📜", val: "“Christmas magic is silent. You don't hear it — you feel it.” Let today be a soft, magical kind of day." },
-      8: { tag: "Joke", emoji: "😄", val: "Why was the snowman rummaging in a bag of carrots? He was picking his nose! 😂" },
-      9: { tag: "Fact", emoji: "📚", val: "The largest Christmas tree ever was a 221-foot Douglas fir. That’s taller than a 20-storey building! 🎄" },
-      10: { tag: "Gift", emoji: "🎁", val: "Virtual fluffy socks, deep winter colours, extra soft. Absolutely no cold toes allowed today. ❄️🧦" },
-      11: { tag: "Aesthetic", emoji: "☕", val: "Candlelight + slow Christmas music + warm blankets = December bliss. Perfect for a quiet scroll moment. 🕯️" },
-      12: { tag: "Quote", emoji: "💫", val: "“Joy is the sparkle of Christmas.” May something tiny and unexpected make you smile today. ✨" },
-      13: { tag: "Joke", emoji: "🎅", val: "What do you call a cat on Christmas? Santa Claws. 😼🎅" },
-      14: { tag: "Fact", emoji: "🌍", val: "In Canada, Santa’s official postal code is H0H 0H0. Yes, you can actually write to him there. 📨🎅" },
-      15: { tag: "Gift", emoji: "🧖‍♀️", val: "A virtual spa day: hot shower, fluffy towel, favourite playlist, and no guilt about doing absolutely nothing. 🧖‍♀️💆" },
-      16: { tag: "Aesthetic", emoji: "🍽️", val: "Gold cutlery, greenery down the centre of the table, simple white plates, and fairy lights woven through. Dream dinner setup. 🌿✨" },
-      17: { tag: "Quote", emoji: "💛", val: "“A merry heart is a continual feast.” May your mood be lighter than your to-do list today. 💫" },
-      18: { tag: "Joke", emoji: "🧼", val: "What does Santa use to keep his suit wrinkle-free? Santa-tizer. 🤣 (Okay, a bit cringe. Still festive.)" },
-      19: { tag: "Fact", emoji: "🦌", val: "Rudolph the Red-Nosed Reindeer was invented in 1939 for a department store booklet. Now he’s basically Christmas royalty. 🦌" },
-      20: { tag: "Gift", emoji: "👗", val: "A glam Christmas outfit that fits perfectly, looks amazing in photos and is magically comfortable. Closet goals unlocked. 👗💄" },
-      21: { tag: "Aesthetic", emoji: "🪞", val: "Mirror surrounded by fairy lights, soft glam look, favourite song on repeat, no hurry to go anywhere. Evening aesthetic: achieved. ✨🪞" },
-      22: { tag: "Quote", emoji: "🤍", val: "“The real magic of Christmas is found in the people we share it with.” Even a simple chat can feel like a little celebration." },
-      23: { tag: "Joke", emoji: "🧝‍♂️", val: "What do elves learn at school? The elf-abet. 🔤🧝‍♂️" },
-      24: { tag: "Fact", emoji: "🌟", val: "In many countries, Christmas Eve is the main celebration night with a long dinner and late-night gifts. The party basically starts now. 🌟" },
-      25: { tag: "Gift", emoji: "🤗", val: "A giant invisible Christmas hug wrapped in warmth, peace and silly laughter. Unlimited refills all year. ✨🎁" }
+      6:  { tag: "Aesthetic", emoji: "🕯️", img: "https://media.giphy.com/media/bdxQMezTUgonK/giphy.gif", val: "Dark green velvet, soft fairy lights, and calm vibes. Imagine a quiet evening with a warm drink and zero rush. ☕✨" },
+      7:  { tag: "Quote",     emoji: "📜", img: "https://media.giphy.com/media/aohhw7OFZiYgg/giphy.gif", val: "“Christmas magic is silent. You don't hear it — you feel it.” Let today be a soft, magical kind of day." },
+      8:  { tag: "Joke",      emoji: "😄", img: "https://media.giphy.com/media/l0MYMNc91Wi2vgMve/giphy.gif", val: "Why was the snowman rummaging in a bag of carrots? He was picking his nose! 😂" },
+      9:  { tag: "Fact",      emoji: "📚", img: "https://media.giphy.com/media/cOhyQKeb5bBPlhGE2F/giphy.gif", val: "The largest Christmas tree ever was a 221-foot Douglas fir. That’s taller than a 20-storey building! 🎄" },
+      10: { tag: "Gift",      emoji: "🎁", img: "https://media.giphy.com/media/ZZNmyEhnCbsy750MjE/giphy.gif", val: "Virtual fluffy socks, deep winter colours, extra soft. Absolutely no cold toes allowed today. ❄️🧦" },
+      11: { tag: "Aesthetic", emoji: "☕", img: "https://media.giphy.com/media/aEJJiZ2BvyjWjBoK9C/giphy.gif", val: "Candlelight + slow Christmas music + warm blankets = December bliss. Perfect for a quiet scroll moment. 🕯️" },
+      12: { tag: "Quote",     emoji: "💫", img: "https://media.giphy.com/media/bdxQMezTUgonK/giphy.gif", val: "“Joy is the sparkle of Christmas.” May something tiny and unexpected make you smile today. ✨" },
+      13: { tag: "Joke",      emoji: "🎅", img: "https://media.giphy.com/media/l0MYMNc91Wi2vgMve/giphy.gif", val: "What do you call a cat on Christmas? Santa Claws. 😼🎅" },
+      14: { tag: "Fact",      emoji: "🌍", img: "https://media.giphy.com/media/cOhyQKeb5bBPlhGE2F/giphy.gif", val: "In Canada, Santa’s official postal code is H0H 0H0. Yes, you can actually write to him there. 📨🎅" },
+      15: { tag: "Gift",      emoji: "🧖‍♀️", img: "https://media.giphy.com/media/ZZNmyEhnCbsy750MjE/giphy.gif", val: "A virtual spa day: hot shower, fluffy towel, favourite playlist, and no guilt about doing absolutely nothing. 🧖‍♀️💆" },
+      16: { tag: "Aesthetic", emoji: "🍽️", img: "https://media.giphy.com/media/aEJJiZ2BvyjWjBoK9C/giphy.gif", val: "Gold cutlery, greenery down the centre of the table, simple white plates, and fairy lights woven through. Dream dinner setup. 🌿✨" },
+      17: { tag: "Quote",     emoji: "💛", img: "https://media.giphy.com/media/aohhw7OFZiYgg/giphy.gif", val: "“A merry heart is a continual feast.” May your mood be lighter than your to-do list today. 💫" },
+      18: { tag: "Joke",      emoji: "🧼", img: "https://media.giphy.com/media/l0MYMNc91Wi2vgMve/giphy.gif", val: "What does Santa use to keep his suit wrinkle-free? Santa-tizer. 🤣 (Okay, a bit cringe. Still festive.)" },
+      19: { tag: "Fact",      emoji: "🦌", img: "https://media.giphy.com/media/cOhyQKeb5bBPlhGE2F/giphy.gif", val: "Rudolph the Red-Nosed Reindeer was invented in 1939 for a department store booklet. Now he’s basically Christmas royalty. 🦌" },
+      20: { tag: "Gift",      emoji: "👗", img: "https://media.giphy.com/media/ZZNmyEhnCbsy750MjE/giphy.gif", val: "A glam Christmas outfit that fits perfectly, looks amazing in photos and is magically comfortable. Closet goals unlocked. 👗💄" },
+      21: { tag: "Aesthetic", emoji: "🪞", img: "https://media.giphy.com/media/aEJJiZ2BvyjWjBoK9C/giphy.gif", val: "Mirror surrounded by fairy lights, soft glam look, favourite song on repeat, no hurry to go anywhere. Evening aesthetic: achieved. ✨🪞" },
+      22: { tag: "Quote",     emoji: "🤍", img: "https://media.giphy.com/media/aohhw7OFZiYgg/giphy.gif", val: "“The real magic of Christmas is found in the people we share it with.” Even a simple chat can feel like a little celebration." },
+      23: { tag: "Joke",      emoji: "🧝‍♂️", img: "https://media.giphy.com/media/l0MYMNc91Wi2vgMve/giphy.gif", val: "What do elves learn at school? The elf-abet. 🔤🧝‍♂️" },
+      24: { tag: "Fact",      emoji: "🌟", img: "https://media.giphy.com/media/bdxQMezTUgonK/giphy.gif", val: "In many countries, Christmas Eve is the main celebration night with a long dinner and late-night gifts. The party basically starts now. 🌟" },
+      25: { tag: "Gift",      emoji: "🤗", img: "https://media.giphy.com/media/aEJJiZ2BvyjWjBoK9C/giphy.gif", val: "A giant invisible Christmas hug wrapped in warmth, peace and silly laughter. Unlimited refills all year. ✨🎁" }
     };
 
     const backdrop = document.getElementById("modal-backdrop");
@@ -434,6 +448,8 @@
     const content = document.getElementById("content");
     const emojiEl = document.getElementById("modal-emoji");
     const dayLabel = document.getElementById("modal-day-label");
+    const imgWrapper = document.getElementById("modal-image-wrapper");
+    const imgEl = document.getElementById("modal-image");
 
     document.querySelectorAll(".day-btn").forEach((btn) =>
       btn.addEventListener("click", () => {
@@ -445,18 +461,28 @@
         content.textContent = info.val;
         emojiEl.textContent = info.emoji;
         dayLabel.textContent = `Day ${d} • ${info.tag}`;
+
+        if (info.img) {
+          imgEl.src = info.img;
+          imgWrapper.style.display = "block";
+        } else {
+          imgEl.src = "";
+          imgWrapper.style.display = "none";
+        }
+
         backdrop.classList.add("active");
         btn.classList.add("opened");
       })
     );
 
-    document.getElementById("close-modal").onclick = () =>
+    function closeModal() {
       backdrop.classList.remove("active");
+    }
+
+    document.getElementById("close-modal").onclick = closeModal;
 
     backdrop.addEventListener("click", (e) => {
-      if (e.target === backdrop) {
-        backdrop.classList.remove("active");
-      }
+      if (e.target === backdrop) closeModal();
     });
   </script>
 </body>
