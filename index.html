@@ -15,41 +15,98 @@
 
     body {
       min-height: 100vh;
-      background: radial-gradient(circle at top, #1f2933, #050816);
+      background: radial-gradient(circle at top, #020617, #020617 40%, #000 100%);
       color: #f9fafb;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 16px;
+      overflow-x: hidden;
+    }
+
+    /* Snow effect */
+    .snow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+      background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.55) 50%, transparent 50%),
+        radial-gradient(2px 2px at 80% 10%, rgba(255,255,255,0.6) 50%, transparent 50%),
+        radial-gradient(2px 2px at 30% 80%, rgba(255,255,255,0.5) 50%, transparent 50%),
+        radial-gradient(3px 3px at 70% 60%, rgba(255,255,255,0.5) 50%, transparent 50%);
+      background-size: 260px 260px, 320px 320px, 280px 280px, 360px 360px;
+      animation: snow-fall 20s linear infinite;
+    }
+
+    @keyframes snow-fall {
+      0% {
+        transform: translateY(-40px);
+      }
+      100% {
+        transform: translateY(40px);
+      }
     }
 
     .card {
       max-width: 480px;
       width: 100%;
-      background: rgba(15, 23, 42, 0.92);
-      border-radius: 20px;
-      padding: 20px 18px 24px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      backdrop-filter: blur(14px);
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 26px;
+      padding: 18px 16px 24px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      backdrop-filter: blur(18px);
+      position: relative;
+      z-index: 1;
     }
 
-    .title {
-      text-align: center;
-      margin-bottom: 10px;
+    /* Hero section */
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border-radius: 18px;
+      background: linear-gradient(120deg, rgba(248, 250, 252, 0.08), rgba(15, 118, 110, 0.55));
+      border: 1px solid rgba(148, 163, 184, 0.4);
     }
 
-    .title h1 {
-      font-size: 1.35rem;
-      letter-spacing: 0.08em;
+    .hero-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #fef9c3, #f97316, #b91c1c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 18px rgba(249, 115, 22, 0.75);
+      animation: hero-glow 2.8s ease-in-out infinite;
+      font-size: 1.6rem;
+    }
+
+    @keyframes hero-glow {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 14px rgba(249,115,22,0.7); }
+      50% { transform: scale(1.08); box-shadow: 0 0 22px rgba(250,204,21,0.9); }
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .hero-title {
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #facc15;
     }
 
-    .title h2 {
-      font-size: 0.9rem;
-      font-weight: 400;
-      margin-top: 4px;
+    .hero-sub {
+      font-size: 0.75rem;
       color: #e5e7eb;
     }
 
@@ -57,49 +114,114 @@
       text-align: center;
       font-size: 0.8rem;
       color: #9ca3af;
-      margin-bottom: 14px;
+      margin: 10px 0 14px;
+    }
+
+    .subtitle span {
+      color: #fbbf24;
     }
 
     .calendar-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      gap: 10px;
     }
 
     .day-btn {
       position: relative;
       border: none;
-      border-radius: 12px;
-      padding: 12px 0;
+      border-radius: 14px;
+      padding: 12px 0 10px;
       font-size: 0.9rem;
       font-weight: 600;
       color: #e5e7eb;
-      background: linear-gradient(135deg, #0f172a, #111827);
+      background: radial-gradient(circle at top left, #0f766e, #020617 60%);
       cursor: pointer;
       transition: transform 0.12s ease, box-shadow 0.12s ease,
-        background 0.2s ease, border-color 0.15s ease;
-      border: 1px solid rgba(148, 163, 184, 0.35);
+        background 0.25s ease, border-color 0.15s ease, translate 0.12s ease;
+      border: 1px solid rgba(148, 163, 184, 0.4);
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
     }
 
-    .day-btn span.day-number {
+    .day-number {
       position: relative;
       z-index: 2;
     }
 
-    .day-btn.opened {
-      background: linear-gradient(135deg, #065f46, #15803d);
-      border-color: rgba(250, 204, 21, 0.9);
+    .day-icon {
+      font-size: 0.9rem;
+      opacity: 0.9;
     }
 
+    .day-btn::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background: conic-gradient(
+        from 180deg,
+        transparent 0deg,
+        rgba(250, 204, 21, 0.6) 90deg,
+        transparent 140deg
+      );
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      filter: blur(10px);
+    }
+
+    .day-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.85);
+      border-color: rgba(250, 204, 21, 0.75);
+    }
+
+    .day-btn:hover::before {
+      opacity: 1;
+    }
+
+    .day-btn.opened {
+      background: radial-gradient(circle at bottom right, #16a34a, #052e16 65%);
+      border-color: rgba(250, 204, 21, 0.95);
+    }
+
+    .day-btn.opened .day-number {
+      color: #fefce8;
+    }
+
+    .day-btn.opened::after {
+      content: "✨";
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      font-size: 0.8rem;
+      animation: sparkle-pop 0.6s ease-out;
+    }
+
+    @keyframes sparkle-pop {
+      0% { transform: scale(0.3) translateY(-4px); opacity: 0; }
+      60% { transform: scale(1.3) translateY(0); opacity: 1; }
+      100% { transform: scale(1) translateY(0); opacity: 0.9; }
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      font-size: 0.7rem;
+      text-align: center;
+      color: #9ca3af;
+    }
+
+    /* Modal */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.75);
+      background: rgba(15, 23, 42, 0.78);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 20;
+      z-index: 10;
       padding: 16px;
     }
 
@@ -110,19 +232,44 @@
     .modal {
       width: 100%;
       max-width: 420px;
-      background: #020617;
-      border-radius: 20px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      padding: 18px 18px 16px;
+      background: radial-gradient(circle at top, #0f172a, #020617 65%);
+      border-radius: 22px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      padding: 16px 16px 14px;
       position: relative;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+    }
+
+    .modal::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top, rgba(250, 204, 21, 0.18), transparent 70%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .modal-inner {
+      position: relative;
+      z-index: 1;
     }
 
     .modal-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+    }
+
+    .modal-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-emoji {
+      font-size: 1.3rem;
     }
 
     .modal-title {
@@ -133,90 +280,171 @@
       letter-spacing: 0.08em;
     }
 
+    .modal-day-label {
+      font-size: 0.7rem;
+      color: #cbd5f5;
+      opacity: 0.95;
+    }
+
+    .close-btn {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .close-btn:hover {
+      color: #facc15;
+    }
+
     .modal-body {
       font-size: 0.9rem;
       color: #e5e7eb;
       line-height: 1.6;
+      margin-top: 4px;
     }
 
     .modal-tag {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       border-radius: 999px;
       padding: 2px 8px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.7);
       font-size: 0.7rem;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       color: #9ca3af;
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .modal-tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #fbbf24;
+    }
+
+    .modal-footnote {
+      margin-top: 10px;
+      font-size: 0.7rem;
+      color: #9ca3af;
+      text-align: right;
+      opacity: 0.9;
+    }
+
+    .modal-footnote span {
+      color: #facc15;
     }
   </style>
 </head>
 <body>
+  <div class="snow"></div>
+
   <div class="card">
-    <div class="title">
-      <h1>Christmas Advent Calendar</h1>
-      <h2>6–25 December</h2>
+    <div class="hero">
+      <div class="hero-icon">🎄</div>
+      <div class="hero-text">
+        <div class="hero-title">Christmas Advent</div>
+        <div class="hero-sub">Tap a date between 6–25 December to reveal a tiny festive surprise.</div>
+      </div>
     </div>
 
-    <p class="subtitle">Tap a date to open a festive surprise 🎄✨</p>
+    <p class="subtitle">
+      Little mix of <span>aesthetic</span>, <span>quotes</span>, <span>jokes</span>, <span>fun facts</span> &amp; <span>virtual gifts</span>.
+    </p>
 
     <div class="calendar-grid">
       <script>
+        const icons = ["🎁", "⭐", "🎄", "✨", "🕯️", "❄️", "🧣", "🍪", "🔔", "🧦"];
+        let iconIndex = 0;
         for (let d = 6; d <= 25; d++) {
-          document.write(`<button class="day-btn" data-day="${d}">
-            <span class="day-number">${d}</span>
-          </button>`);
+          const icon = icons[iconIndex % icons.length];
+          iconIndex++;
+          document.write(
+            `<button class="day-btn" data-day="${d}">
+              <span class="day-number">${d}</span>
+              <span class="day-icon">${icon}</span>
+            </button>`
+          );
         }
       </script>
+    </div>
+
+    <div class="footer-note">
+      Doors you’ve opened will glow green with a little ✨ on them.
     </div>
   </div>
 
   <!-- Modal -->
   <div class="modal-backdrop" id="modal-backdrop">
     <div class="modal">
-      <div class="modal-header">
-        <div class="modal-title">Surprise</div>
-        <button class="close-btn" id="close-modal">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-tag" id="tag"></div>
-        <div id="content"></div>
+      <div class="modal-inner">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="modal-emoji" id="modal-emoji">🎁</div>
+            <div>
+              <div class="modal-title">Christmas Surprise</div>
+              <div class="modal-day-label" id="modal-day-label"></div>
+            </div>
+          </div>
+          <button class="close-btn" id="close-modal" aria-label="Close">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-tag" id="tag">
+            <span class="modal-tag-dot"></span>
+            <span id="tag-text"></span>
+          </div>
+          <div id="content"></div>
+          <div class="modal-footnote">
+            6–25 December • <span>Advent Vibes</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
     const data = {
-      6: { tag: "Aesthetic", val: "Dark green velvet, soft fairy lights, and calm vibes ☕✨" },
-      7: { tag: "Quote", val: "“Christmas magic is silent. You don't hear it — you feel it.”" },
-      8: { tag: "Joke", val: "Why was the snowman rummaging in a bag of carrots? He was picking his nose! 😂" },
-      9: { tag: "Fact", val: "The largest Christmas tree ever was a 221-foot Douglas fir! 🎄" },
-      10: { tag: "Gift", val: "Virtual fluffy socks, no cold toes ❄️🧦" },
-      11: { tag: "Aesthetic", val: "Candlelight + slow music + warm blankets = December bliss 🕯️" },
-      12: { tag: "Quote", val: "“Joy is the sparkle of Christmas.” ✨" },
-      13: { tag: "Joke", val: "What do you call a cat on Christmas? Santa Claws 😼🎅" },
-      14: { tag: "Fact", val: "In Canada, Santa’s postal code is H0H 0H0 📨🎅" },
-      15: { tag: "Gift", val: "A virtual spa day — relax and enjoy 🧖‍♀️💆" },
-      16: { tag: "Aesthetic", val: "Gold table decor + greenery = dream dinner 🌿✨" },
-      17: { tag: "Quote", val: "“A merry heart is a continual feast.” 💫" },
-      18: { tag: "Joke", val: "What does Santa use to keep his suit wrinkle free? Santa-tizer 🤣" },
-      19: { tag: "Fact", val: "Rudolph was invented in 1939 — now Christmas royalty 🦌" },
-      20: { tag: "Gift", val: "A glam Christmas outfit that fits like magic 👗💄" },
-      21: { tag: "Aesthetic", val: "Mirror fairy lights + soft glam night ✨🪞" },
-      22: { tag: "Quote", val: "“The real magic of Christmas is family & friends.” 🤍" },
-      23: { tag: "Joke", val: "What do elves learn at school? The elf-abet 🔤🧝‍♂️" },
-      24: { tag: "Fact", val: "In many countries, Christmas Eve is the BIG celebration night 🌟" },
-      25: { tag: "Gift", val: "A magical Christmas hug ✨🎁" }
+      6: { tag: "Aesthetic", emoji: "🕯️", val: "Dark green velvet, soft fairy lights, and calm vibes. Imagine a quiet evening with a warm drink and zero rush. ☕✨" },
+      7: { tag: "Quote", emoji: "📜", val: "“Christmas magic is silent. You don't hear it — you feel it.” Let today be a soft, magical kind of day." },
+      8: { tag: "Joke", emoji: "😄", val: "Why was the snowman rummaging in a bag of carrots? He was picking his nose! 😂" },
+      9: { tag: "Fact", emoji: "📚", val: "The largest Christmas tree ever was a 221-foot Douglas fir. That’s taller than a 20-storey building! 🎄" },
+      10: { tag: "Gift", emoji: "🎁", val: "Virtual fluffy socks, deep winter colours, extra soft. Absolutely no cold toes allowed today. ❄️🧦" },
+      11: { tag: "Aesthetic", emoji: "☕", val: "Candlelight + slow Christmas music + warm blankets = December bliss. Perfect for a quiet scroll moment. 🕯️" },
+      12: { tag: "Quote", emoji: "💫", val: "“Joy is the sparkle of Christmas.” May something tiny and unexpected make you smile today. ✨" },
+      13: { tag: "Joke", emoji: "🎅", val: "What do you call a cat on Christmas? Santa Claws. 😼🎅" },
+      14: { tag: "Fact", emoji: "🌍", val: "In Canada, Santa’s official postal code is H0H 0H0. Yes, you can actually write to him there. 📨🎅" },
+      15: { tag: "Gift", emoji: "🧖‍♀️", val: "A virtual spa day: hot shower, fluffy towel, favourite playlist, and no guilt about doing absolutely nothing. 🧖‍♀️💆" },
+      16: { tag: "Aesthetic", emoji: "🍽️", val: "Gold cutlery, greenery down the centre of the table, simple white plates, and fairy lights woven through. Dream dinner setup. 🌿✨" },
+      17: { tag: "Quote", emoji: "💛", val: "“A merry heart is a continual feast.” May your mood be lighter than your to-do list today. 💫" },
+      18: { tag: "Joke", emoji: "🧼", val: "What does Santa use to keep his suit wrinkle-free? Santa-tizer. 🤣 (Okay, a bit cringe. Still festive.)" },
+      19: { tag: "Fact", emoji: "🦌", val: "Rudolph the Red-Nosed Reindeer was invented in 1939 for a department store booklet. Now he’s basically Christmas royalty. 🦌" },
+      20: { tag: "Gift", emoji: "👗", val: "A glam Christmas outfit that fits perfectly, looks amazing in photos and is magically comfortable. Closet goals unlocked. 👗💄" },
+      21: { tag: "Aesthetic", emoji: "🪞", val: "Mirror surrounded by fairy lights, soft glam look, favourite song on repeat, no hurry to go anywhere. Evening aesthetic: achieved. ✨🪞" },
+      22: { tag: "Quote", emoji: "🤍", val: "“The real magic of Christmas is found in the people we share it with.” Even a simple chat can feel like a little celebration." },
+      23: { tag: "Joke", emoji: "🧝‍♂️", val: "What do elves learn at school? The elf-abet. 🔤🧝‍♂️" },
+      24: { tag: "Fact", emoji: "🌟", val: "In many countries, Christmas Eve is the main celebration night with a long dinner and late-night gifts. The party basically starts now. 🌟" },
+      25: { tag: "Gift", emoji: "🤗", val: "A giant invisible Christmas hug wrapped in warmth, peace and silly laughter. Unlimited refills all year. ✨🎁" }
     };
 
     const backdrop = document.getElementById("modal-backdrop");
-    const tag = document.getElementById("tag");
+    const tagEl = document.getElementById("tag-text");
     const content = document.getElementById("content");
+    const emojiEl = document.getElementById("modal-emoji");
+    const dayLabel = document.getElementById("modal-day-label");
 
     document.querySelectorAll(".day-btn").forEach((btn) =>
       btn.addEventListener("click", () => {
         const d = btn.dataset.day;
-        tag.textContent = data[d].tag;
-        content.textContent = data[d].val;
+        const info = data[d];
+        if (!info) return;
+
+        tagEl.textContent = info.tag;
+        content.textContent = info.val;
+        emojiEl.textContent = info.emoji;
+        dayLabel.textContent = `Day ${d} • ${info.tag}`;
         backdrop.classList.add("active");
         btn.classList.add("opened");
       })
@@ -224,6 +452,12 @@
 
     document.getElementById("close-modal").onclick = () =>
       backdrop.classList.remove("active");
+
+    backdrop.addEventListener("click", (e) => {
+      if (e.target === backdrop) {
+        backdrop.classList.remove("active");
+      }
+    });
   </script>
 </body>
 </html>
